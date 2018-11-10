@@ -88,7 +88,7 @@ def techorangeAi():
     
     pre_url = 'https://buzzorange.com/techorange/'
     
-    string = '最新4篇techorange貼文：\n'
+    string = '最新3篇techorange貼文：\n'
     for  item in range(3):
         string += atags[item].a['href'] +'\n'
     return string
