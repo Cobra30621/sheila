@@ -145,7 +145,7 @@ def handle_message(event):
         return 0 
         
     if re.search('ai|techorangeAi', event.message.text, re.IGNORECASE):
-        text = corwler.techorangeAi()
+        text = corwler2.techorangeAi()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=text))
