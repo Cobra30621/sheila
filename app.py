@@ -18,7 +18,7 @@ from datetime import datetime
 
 # customer module
 import mongodb
-import corwler2
+import corwler
 
 
 app = Flask(__name__)
