@@ -118,7 +118,7 @@ def handle_message(event):
     
 
     if re.search('新聞|news', event.message.text, re.IGNORECASE):
-        dic = techorangeAi()
+        dic = corwler.techorangeAi()
         
         columns = []
         for i in range(1):
