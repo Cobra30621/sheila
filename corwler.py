@@ -85,30 +85,35 @@ def techorangeAi():
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.find_all('h4', re.compile('entry-title'))
-    
-    for index in range(2,3):    
+
+    cards = []
+    for index in range(3):    
         #文張標題
-        #index = 2
+
         findtitle = atags[index].a['onclick'].split(',')
-        title = findtitle[4]
+        title = findtitle[4].replace('\'', '')
         
         #文章內文
         interUrl = atags[index].a['href']
         resp = requests.get(interUrl)
         soup = BeautifulSoup(resp.text, 'html.parser')
         interAtags = soup.find_all('div', re.compile('entry-content'))
-        text = str(interAtags[0].blockquote.p)[:50]
-        text = text.replace('<p>', ' ')
         
-       
+        if 'blockquote' in str(interAtags[0]):
+            text = str(interAtags[0].blockquote.p)[:50]
+            text = text.replace('<p>', ' ')
+        else:
+            text = interAtags[0].find_all('p',{'class':'p1'})
+
+
+        '''tmp = interAtags[0].find_all('p',{'class':'p1'})
+        tmp[1]'''
         #文章連結
         link = interUrl
         
         #圖片
-        img = soup.find_all('img', re.compile('alignnone'))
-        image = img[0]['src']   
-        
-        cards = []
+        img = soup.find_all('img', re.compile('align'))
+        image = img[1]['src']   
         
         card = {'title':title,
                     'link':link,
@@ -117,7 +122,6 @@ def techorangeAi():
                     }
         cards.append(card)
  
-    dic = cards
     
     return cards
     
@@ -127,8 +131,7 @@ def techorangeAi():
         string += atags[item].a['href'] +'\n'
     return string
     
-            interAtags = soup.find_all('div', re.compile('entry-content'))
-        interAtags[0]
+
         
     '''
 
