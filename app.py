@@ -118,10 +118,10 @@ def handle_message(event):
     
 
     if re.search('新聞|news', event.message.text, re.IGNORECASE):
-        dic = corwler.udn_news()
+        dic = techorangeAi()
         
         columns = []
-        for i in range(0,3):
+        for i in range(1):
             carousel = CarouselColumn(
                         thumbnail_image_url = dic[i]['img'],
                         title = dic[i]['title'],
@@ -145,7 +145,7 @@ def handle_message(event):
         return 0 
         
     if re.search('ai|techorangeAi', event.message.text, re.IGNORECASE):
-        text = corwler2.techorangeAi()
+        text = corwler.techorangeAi()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=text))

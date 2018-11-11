@@ -17,7 +17,7 @@ def udn_news():
     
     回傳是一個dict
     '''
-    rss_url = 'https://udn.com/rssfeed/news/2/6638?ch=news'
+    rss_url = 'https://tw.appledaily.com/rss'
  
     # 抓取資料
     rss = feedparser.parse(rss_url)
@@ -77,20 +77,59 @@ def google():
     
     return string
 
-def Dcard():
+def techorangeAi():
     '''
-    在Dcard 上某個關鍵字最新的文章
+    在techorangeAi 上某個關鍵字最新的文章
     '''
-    url = 'https://www.dcard.tw/f'
+    url = 'https://buzzorange.com/techorange/?s=車'
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
-    atags = soup.find_all('a', re.compile('PostEntry_root_'))
+    atags = soup.find_all('h4', re.compile('entry-title'))
     
-    pre_url = 'https://www.dcard.tw/'
+    for index in range(2,3):    
+        #文張標題
+        index = 0
+        findtitle = atags[index].a['onclick'].split(',')
+        title = findtitle[4]
+        
+        #文章內文
+        interUrl = atags[index].a['href']
+        resp = requests.get(interUrl)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        interAtags = soup.find_all('div', re.compile('entry-content'))
+        text = str(interAtags[0].blockquote.p)[:50]
+        text = text.replace('<p>', ' ')
+        
     
-    string = '最新4篇Dcard貼文：\n'
-    for  item in atags[:4]:
-        string += pre_url+item['href']+'\n'
-
+        #文章連結
+        link = interUrl
+        
+        #圖片
+        img = soup.find_all('img', re.compile('alignnone'))
+        image = img[0]['src']   
+        
+        cards = []
+        
+        card = {'title':title,
+                    'link':link,
+                    'summary': text,
+                    'img':image
+                    }
+        cards.append(card)
+ 
+    dic = cards
+    
+    return cards
+    
+    
+'''    string = '最新4篇techorange貼文：\n'
+    for  item in range(3):
+        string += atags[item].a['href'] +'\n'
     return string
     
+            interAtags = soup.find_all('div', re.compile('entry-content'))
+        interAtags[0]
+        tmp = interAtags[0].find_all(p,{class:'p1'})
+        tmp[1]
+    '''
+
