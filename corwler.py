@@ -81,14 +81,14 @@ def techorangeAi():
     '''
     在techorangeAi 上某個關鍵字最新的文章
     '''
-    url = 'https://buzzorange.com/techorange/?s=車'
+    url = 'https://buzzorange.com/techorange/?s=ai'
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.find_all('h4', re.compile('entry-title'))
     
     for index in range(2,3):    
         #文張標題
-        index = 0
+        #index = 2
         findtitle = atags[index].a['onclick'].split(',')
         title = findtitle[4]
         
@@ -100,7 +100,7 @@ def techorangeAi():
         text = str(interAtags[0].blockquote.p)[:50]
         text = text.replace('<p>', ' ')
         
-    
+       
         #文章連結
         link = interUrl
         
@@ -129,7 +129,6 @@ def techorangeAi():
     
             interAtags = soup.find_all('div', re.compile('entry-content'))
         interAtags[0]
-        tmp = interAtags[0].find_all(p,{class:'p1'})
-        tmp[1]
+        
     '''
 
