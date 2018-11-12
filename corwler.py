@@ -17,7 +17,7 @@ def udn_news():
     
     回傳是一個dict
     '''
-    rss_url = 'https://tw.appledaily.com/rss'
+    rss_url = 'https://udn.com/rssfeed/news/2/6638?ch=news'
  
     # 抓取資料
     rss = feedparser.parse(rss_url)
@@ -51,6 +51,7 @@ def udn_news():
         cards.append(card)
         
     return cards
+
 
 
 def google():

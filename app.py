@@ -121,7 +121,7 @@ def handle_message(event):
         dic = corwler.udn_news()
         
         columns = []
-        for i in range(1):
+        for i in range(0,3):
             carousel = CarouselColumn(
                         thumbnail_image_url = dic[i]['img'],
                         title = dic[i]['title'],
@@ -148,7 +148,7 @@ def handle_message(event):
         dic = corwler.theNewLens()
         
         columns = []
-        for i in range(1):
+        for i in range(3):
             carousel = CarouselColumn(
                         thumbnail_image_url = dic[i]['img'],
                         title = dic[i]['title'],
@@ -175,7 +175,7 @@ def handle_message(event):
         dic = corwler.techorangeAi()
         
         columns = []
-        for i in range(1):
+        for i in range(0,3):
             carousel = CarouselColumn(
                         thumbnail_image_url = dic[i]['img'],
                         title = dic[i]['title'],
