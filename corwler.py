@@ -149,7 +149,7 @@ def theNewLens():
         title = atags2[index].a['title']
         
         #文章連結
-        link = atags[index].a['href']
+        link = atags2[index].a['href']
         
         #文章內文
         textlist = atags[index].find_all('div', re.compile('description'))
