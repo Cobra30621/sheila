@@ -118,6 +118,60 @@ def handle_message(event):
     
 
     if re.search('新聞|news', event.message.text, re.IGNORECASE):
+        dic = corwler.udn_news()
+        
+        columns = []
+        for i in range(1):
+            carousel = CarouselColumn(
+                        thumbnail_image_url = dic[i]['img'],
+                        title = dic[i]['title'],
+                        text = dic[i]['summary'],
+                        actions=[
+                            URITemplateAction(
+                                label = '點我看新聞',
+                                uri = dic[i]['link']
+                              )
+                            ]
+                        )
+            columns.append(carousel)
+        
+        remessage = TemplateSendMessage(
+                    alt_text='Carousel template',
+                    template=CarouselTemplate(columns=columns)
+                    )
+        
+        
+        line_bot_api.reply_message(event.reply_token, remessage)
+        return 0 
+
+    if re.search('theNewLens|關鍵', event.message.text, re.IGNORECASE):
+        dic = corwler.theNewLens()
+        
+        columns = []
+        for i in range(1):
+            carousel = CarouselColumn(
+                        thumbnail_image_url = dic[i]['img'],
+                        title = dic[i]['title'],
+                        text = dic[i]['summary'],
+                        actions=[
+                            URITemplateAction(
+                                label = '點我看新聞',
+                                uri = dic[i]['link']
+                              )
+                            ]
+                        )
+            columns.append(carousel)
+        
+        remessage = TemplateSendMessage(
+                    alt_text='Carousel template',
+                    template=CarouselTemplate(columns=columns)
+                    )
+        
+        
+        line_bot_api.reply_message(event.reply_token, remessage)
+        return 0 
+
+    if re.search('aii', event.message.text, re.IGNORECASE):
         dic = corwler.techorangeAi()
         
         columns = []
@@ -143,6 +197,7 @@ def handle_message(event):
         
         line_bot_api.reply_message(event.reply_token, remessage)
         return 0 
+
         
     if re.search('ai|techorangeAi', event.message.text, re.IGNORECASE):
         text = corwler.techorangeAi()

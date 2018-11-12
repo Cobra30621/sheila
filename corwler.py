@@ -88,7 +88,7 @@ def techorangeAi():
 
     cards = []
     for index in range(3):    
-        #文張標題
+        #文章標題
 
         findtitle = atags[index].a['onclick'].split(',')
         title = findtitle[4].replace('\'', '')
@@ -129,9 +129,44 @@ def techorangeAi():
 '''    string = '最新4篇techorange貼文：\n'
     for  item in range(3):
         string += atags[item].a['href'] +'\n'
-    return string
-    
-
-        
+    return string        
     '''
 
+def theNewLens():
+    '''
+    搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
+    '''
+    url = 'https://www.thenewslens.com/category/science'
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    atags = soup.find_all('div', re.compile('info-box'))
+    atags2 = soup.find_all('div', re.compile('img-box'))
+    
+    cards = []
+    for index in range(3):
+        #文章標題
+        title = atags2[index].a['title']
+        
+        #文章連結
+        link = atags[index].a['href']
+        
+        #文章內文
+        textlist = atags[index].find_all('div', re.compile('description'))
+        text = str(textlist[0])
+        text = text.replace('<div class="description"> ', '')[:50] 
+        
+        #圖片
+        
+        imglist = str(atags2[index].a.div.img).split(',')
+        imglist = imglist[2].split(' ')
+        image = imglist[1]
+        
+        
+        card = {'title':title,
+                        'link':link,
+                        'summary': text,
+                        'img':image
+                        }
+        cards.append(card)
+
+    return cards
