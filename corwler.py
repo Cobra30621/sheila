@@ -118,21 +118,7 @@ def techorangeAi():
     
     return cards
     
-'''        interAtags = soup.find_all('div', re.compile('entry-content'))
-        
-        text = interAtags[0].text       
- if 'blockquote' in str(interAtags[0]):
-            text = str(interAtags[0].blockquote.p)[:50]
-            text = text.replace('<p>', ' ')
-        else:
-            text = interAtags[0].find_all('p',{'class':'p1'})
-            tmp = interAtags[0].find_all('p',{'class':'p1'})
-        tmp[1]'''    
-'''    string = '最新4篇techorange貼文：\n'
-    for  item in range(3):
-        string += atags[item].a['href'] +'\n'
-    return string        
-    '''
+
 
 def theNewLens():
     '''
