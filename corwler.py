@@ -91,7 +91,7 @@ def techorangeAi():
     for index in range(3):    
         #文章標題
 
-        title = atags[index].text
+        title = atags[index].text[:35]
         
         #文章內文
         interUrl = atags[index].a['href']
@@ -199,5 +199,19 @@ def fb():
     return cards
 
 
-
+'''        interAtags = soup.find_all('div', re.compile('entry-content'))
+        
+        text = interAtags[0].text       
+ if 'blockquote' in str(interAtags[0]):
+            text = str(interAtags[0].blockquote.p)[:50]
+            text = text.replace('<p>', ' ')
+        else:
+            text = interAtags[0].find_all('p',{'class':'p1'})
+            tmp = interAtags[0].find_all('p',{'class':'p1'})
+        tmp[1]'''    
+'''    string = '最新4篇techorange貼文：\n'
+    for  item in range(3):
+        string += atags[item].a['href'] +'\n'
+    return string        
+    '''
 
