@@ -145,8 +145,8 @@ def handle_message(event):
         return 0 
 
     if re.search('ai|techorangeAi', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi()
-                
+        dic = corwler.theNewLens()
+        
         columns = []
         for i in range(3):
             carousel = CarouselColumn(
@@ -170,9 +170,9 @@ def handle_message(event):
         
         line_bot_api.reply_message(event.reply_token, remessage)
         return 0 
+    
 
 
-        
     
     if message == 'googlemap':
         # 取得最新評價
