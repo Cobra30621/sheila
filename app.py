@@ -145,7 +145,7 @@ def handle_message(event):
         return 0 
 
     if re.search('ai|techorangeAi', event.message.text, re.IGNORECASE):
-        dic = techorangeAi()
+        dic = corwler.techorangeAi()
         
         columns = []
         for i in range(3):
