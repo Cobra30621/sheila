@@ -118,29 +118,39 @@ def handle_message(event):
     
 #關鍵評論網
             
-    if event.message.text == '關鍵評論網':
-        message = TemplateSendMessage(
-            alt_text='Buttons template',
-            template=ButtonsTemplate(
-                thumbnail_image_url='https://image3.thenewslens.com/assets/web/cover-photo-medium.png',
-                title='關鍵評論網新聞',
-                text='點擊觀看類型',
-                actions=[
-                    MessageTemplateAction(
-                        label='科學',
-                        text='關鍵評論網科學'
-                    ),
-                    MessageTemplateAction(
-                        label='商業',
-                        text='關鍵評論網商業'
-                    ),
-                    MessageTemplateAction(
-                        label='職場',
-                        text='關鍵評論網職場'
+    if re.search('關鍵評論網', event.message.text, re.IGNORECASE):
+     
+        columns = []
+        img = 'https://image3.thenewslens.com/assets/web/cover-photo-medium.png'
+        carousel = CarouselColumn(
+                    thumbnail_image_url = img,
+                    title = '關鍵評論網新聞',
+                    text = '點擊觀看類型',
+                    actions=[
+                            MessageTemplateAction(
+                            label='科學',
+                            text='關鍵評論網科學'
+                        ),
+                        MessageTemplateAction(
+                            label='商業',
+                            text='關鍵評論網商業'
+                        ),
+                        MessageTemplateAction(
+                            label='職場',
+                            text='關鍵評論網職場'
+                        )
+                                ]
+                        )
+            columns.append(carousel)
+        
+        remessage = TemplateSendMessage(
+                    alt_text='Carousel template',
+                    template=CarouselTemplate(columns=columns)
                     )
-                ]
-            )
-        )
+        
+        
+        line_bot_api.reply_message(event.reply_token, remessage)
+        return 0         
             
     
     
