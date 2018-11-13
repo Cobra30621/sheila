@@ -122,25 +122,26 @@ def handle_message(event):
      
         columns = []
         img = 'https://image3.thenewslens.com/assets/web/cover-photo-medium.png'
+
         carousel = CarouselColumn(
                     thumbnail_image_url = img,
                     title = '關鍵評論網新聞',
                     text = '點擊觀看類型',
                     actions=[
-                            MessageTemplateAction(
+                        MessageTemplateAction(
                             label='科學',
                             text='關鍵評論網科學'
-                        ),
+                           ),
                         MessageTemplateAction(
                             label='商業',
                             text='關鍵評論網商業'
-                        ),
+                           ),
                         MessageTemplateAction(
                             label='職場',
                             text='關鍵評論網職場'
-                        )
-                                ]
-                        )
+                           )
+                         ]
+                     )
             columns.append(carousel)
         
         remessage = TemplateSendMessage(
