@@ -78,12 +78,12 @@ def google():
     
     return string
 
-def techorangeAi(newType):
+def techorange(newType):
     '''
     在techorangeAi 上某個關鍵字最新的文章
     '''
     newType = newType
-    url = 'https://buzzorange.com/techorange/?s=' + newType
+    url = 'https://buzzorange.com/techorange/tag/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.select('.entry-title')

@@ -102,7 +102,7 @@ def handle_message(event):
 
 #關鍵評論網
             
-    if re.search('關鍵評論網', event.message.text, re.IGNORECASE):
+    if re.search('theNewLens', event.message.text, re.IGNORECASE):
      
         columns = []
         img = 'https://image3.thenewslens.com/assets/web/cover-photo-medium.png'
@@ -243,7 +243,16 @@ def handle_message(event):
                         MessageTemplateAction(
                             label='數位行銷',
                             text='tech數位行銷'
-                           ),
+                           )
+
+                         ]
+                     )
+        columns.append(carousel)
+        carousel2 = CarouselColumn(
+                    thumbnail_image_url = img,
+                    title = '科技報橘新聞',
+                    text = '點擊觀看類型',
+                    actions=[
                         MessageTemplateAction(
                             label='新經濟',
                             text='tech新經濟'
@@ -251,10 +260,10 @@ def handle_message(event):
                         MessageTemplateAction(
                             label='數位轉型',
                             text='tech數位轉型'
-                           )
+                           )      
                          ]
-                     )
-        columns.append(carousel)
+                     )        
+        columns.append(carousel2)
         
         remessage = TemplateSendMessage(
                     alt_text='Carousel template',
@@ -267,7 +276,7 @@ def handle_message(event):
             
     
     if re.search('tech創新創業', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('創新創業/')
+        dic = corwler.techorange('創新創業/')
         
         columns = []
         for i in range(3):
@@ -294,7 +303,7 @@ def handle_message(event):
         return 0 
     
     if re.search('tech人工智慧', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('artificialintelligence/')
+        dic = corwler.techorange('artificialintelligence/')
         
         columns = []
         for i in range(3):
@@ -321,7 +330,7 @@ def handle_message(event):
         return 0 
     
     if re.search('techorange新經濟', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('新經濟/')
+        dic = corwler.techorange('新經濟/')
         
         columns = []
         for i in range(3):
@@ -348,7 +357,7 @@ def handle_message(event):
         return 0 
     
     if re.search('techorange數位轉型', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('數位轉型/')
+        dic = corwler.techorange('數位轉型/')
         
         columns = []
         for i in range(3):
@@ -375,7 +384,7 @@ def handle_message(event):
         return 0 
     
     if re.search('techorange', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('')
+        dic = corwler.techorange('')
         
         columns = []
         for i in range(3):
@@ -402,7 +411,7 @@ def handle_message(event):
         return 0 
     
     if re.search('tech數位行銷', event.message.text, re.IGNORECASE):
-        dic = corwler.techorangeAi('software_digimarketing/')
+        dic = corwler.techorange('software_digimarketing/')
         
         columns = []
         for i in range(3):
