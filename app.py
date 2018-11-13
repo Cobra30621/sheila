@@ -130,15 +130,15 @@ def handle_message(event):
                     actions=[
                         MessageTemplateAction(
                             label='科學',
-                            text='關鍵評論網科學'
+                            text='關鍵評論科學'
                            ),
                         MessageTemplateAction(
                             label='商業',
-                            text='關鍵評論網商業'
+                            text='關鍵評論商業'
                            ),
                         MessageTemplateAction(
                             label='職場',
-                            text='關鍵評論網職場'
+                            text='關鍵評論職場'
                            )
                          ]
                      )
@@ -264,22 +264,7 @@ def handle_message(event):
                          ]
                      )
         columns.append(carousel)
-        carousel2 = CarouselColumn(
-                    thumbnail_image_url = img,
-                    title = '科技報橘新聞',
-                    text = '點擊觀看類型',
-                    actions=[
-                        MessageTemplateAction(
-                            label='新經濟',
-                            text='tech新經濟'
-                           ),
-                        MessageTemplateAction(
-                            label='數位轉型',
-                            text='tech數位轉型'
-                           )      
-                         ]
-                     )        
-        columns.append(carousel2)
+
         
         remessage = TemplateSendMessage(
                     alt_text='Carousel template',
