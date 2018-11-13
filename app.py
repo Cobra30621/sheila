@@ -142,7 +142,7 @@ def handle_message(event):
                            )
                          ]
                      )
-            columns.append(carousel)
+        columns.append(carousel)
         
         remessage = TemplateSendMessage(
                     alt_text='Carousel template',
