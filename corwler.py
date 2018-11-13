@@ -78,11 +78,12 @@ def google():
     
     return string
 
-def techorangeAi():
+def techorangeAi(newType):
     '''
     在techorangeAi 上某個關鍵字最新的文章
     '''
-    url = 'https://buzzorange.com/techorange/?s=ai'
+    newType = newType
+    url = 'https://buzzorange.com/techorange/?s=' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.select('.entry-title')
@@ -91,7 +92,7 @@ def techorangeAi():
     for index in range(3):    
         #文章標題
 
-        title = atags[index].text[:35]
+        title = atags[index].text[:40]
         
         #文章內文
         interUrl = atags[index].a['href']
@@ -120,11 +121,12 @@ def techorangeAi():
     
 
 
-def theNewLens():
+def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
     '''
-    url = 'https://www.thenewslens.com/category/science'
+    newType = newType
+    url = 'https://www.thenewslens.com/category/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.find_all('div', re.compile('info-box'))
@@ -133,7 +135,7 @@ def theNewLens():
     cards = []
     for index in range(3):
         #文章標題
-        title = atags2[index].a['title']
+        title = atags2[index].a['title'][:40]
         
         #文章連結
         link = atags2[index].a['href']
