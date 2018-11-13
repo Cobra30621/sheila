@@ -100,6 +100,22 @@ def handle_message(event):
         line_bot_api.multicast(userids, remessage)
         return 0 
 
+
+    if message == '群體廣播':
+        # 設定使用者下一句話要群廣播
+        mongodb.update_byid(uid,{'ready':1},'users')
+        remessage = TextSendMessage(text='請問要廣播什麼呢?')
+        line_bot_api.reply_message(
+                        event.reply_token,
+                        remessage)
+        return 0 
+    
+    if re.search('Hi|hello|你好|ha', message, re.IGNORECASE):
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+        
+        return 0 
 #關鍵評論網
             
     if re.search('theNewLens', event.message.text, re.IGNORECASE):
