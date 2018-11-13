@@ -453,6 +453,16 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, remessage)
         return 0 
     
+    if message == 'googlemap':
+        # 取得最新評價
+        text = corwler.google()
+        # 包裝訊息
+        remessage = TextSendMessage(text=text)
+        # 回應使用者
+        line_bot_api.reply_message(
+                        event.reply_token,
+                        remessage)
+        return 0     
     
     line_bot_api.reply_message(
         event.reply_token,
