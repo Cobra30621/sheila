@@ -183,19 +183,19 @@ def handle_message(event):
     if re.search('關鍵評論科學', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('science')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('business')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('career')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
 
 #科技報橘
@@ -241,37 +241,37 @@ def handle_message(event):
     if re.search('tech創新創業', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('創新創業/')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('tech人工智慧', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('artificialintelligence/')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('techorange新經濟', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('新經濟/')
         
-        makeCard(dic)        
+        makeCard(dic, event)        
         return 0 
     
     if re.search('techorange數位轉型', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('數位轉型/')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('techorange', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
     if re.search('tech數位行銷', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('software_digimarketing/')
         
-        makeCard(dic)
+        makeCard(dic, event)
         return 0 
     
 
