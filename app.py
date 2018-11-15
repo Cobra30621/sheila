@@ -71,7 +71,7 @@ def handle_follow(event):
         
         mongodb.insert_one(dic,'users')
    
-def makeCard(dic):
+def makeCard(dic, event):
     dic = dic
 
     columns = []
