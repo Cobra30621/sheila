@@ -54,29 +54,6 @@ def udn_news():
 
 
 
-def google():
-    '''
-    抓到最新google map資料
-    '''
-    pretext = ')]}\''
-    
-    # 爬下com
-    url = 'https://www.google.com.tw/maps/preview/reviews?authuser=0&hl=zh-TW&gl=tw&pb=!1s0x3442abcfe9e7617d%3A0x496596e7748a5757!2i0!3i10!4e3!7m4!2b1!3b1!5b1!6b1'
-    resp = requests.get(url)
-    text = resp.text.replace(pretext,'')
-    soup = json.loads(text)
-    
-    # 抓第一篇
-    first = soup[0][0]
-    # 整理資料 
-    username = first[0][1]
-    time = first[1]
-    mesg = first[3]
-    star = first[4]
-    
-    string = '%s \n於 %s 將您評為 %s顆星 \n留言：%s' % (username, time,star,mesg)
-    
-    return string
 
 def techorange(newType):
     '''
@@ -125,31 +102,32 @@ def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
     '''
-    newType = newType
+    newType = 'career'
     url = 'https://www.thenewslens.com/category/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
-    atags = soup.find_all('div', re.compile('info-box'))
-    atags2 = soup.find_all('div', re.compile('img-box'))
-    
+
+    titles = soup.select('.title')
+    texts = soup.select('.description')  
+    links = soup.select('.img-box') 
+    images = soup.select('.lazy-container') 
+
     cards = []
+
     for index in range(3):
         #文章標題
-        title = atags2[index].a['title'][:40]
+        title = titles[index].text[:40]
         
         #文章連結
-        link = atags2[index].a['href']
+        link = links[index].a['href']
         
         #文章內文
-        textlist = atags[index].find_all('div', re.compile('description'))
-        text = str(textlist[0])
-        text = text.replace('<div class="description"> ', '')[:50] 
+        text = texts[index].text[:50] 
         
         #圖片
+        image = re.findall(r'(https.*?)\d{3,}w',str(images[index]))[2]
+        #b = re.findall('350w,[\S]*400w',str(images[0]))
         
-        imglist = str(atags2[index].a.div.img).split(',')
-        imglist = imglist[2].split(' ')
-        image = imglist[1]
         
         
         card = {'title':title,
@@ -200,20 +178,4 @@ def fb():
 
     return cards
 
-
-'''        interAtags = soup.find_all('div', re.compile('entry-content'))
-        
-        text = interAtags[0].text       
- if 'blockquote' in str(interAtags[0]):
-            text = str(interAtags[0].blockquote.p)[:50]
-            text = text.replace('<p>', ' ')
-        else:
-            text = interAtags[0].find_all('p',{'class':'p1'})
-            tmp = interAtags[0].find_all('p',{'class':'p1'})
-        tmp[1]'''    
-'''    string = '最新4篇techorange貼文：\n'
-    for  item in range(3):
-        string += atags[item].a['href'] +'\n'
-    return string        
-    '''
 

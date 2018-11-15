@@ -71,7 +71,32 @@ def handle_follow(event):
         
         mongodb.insert_one(dic,'users')
    
+def makeCard(dic):
+    dic = dic
 
+    columns = []
+    for i in range(3):
+        carousel = CarouselColumn(
+                    thumbnail_image_url = dic[i]['img'],
+                    title = dic[i]['title'],
+                    text = dic[i]['summary'],
+                    actions=[
+                        URITemplateAction(
+                            label = '點我看新聞',
+                            uri = dic[i]['link']
+                          )
+                        ]
+                    )
+        columns.append(carousel)
+    
+    remessage = TemplateSendMessage(
+                alt_text='Carousel template',
+                template=CarouselTemplate(columns=columns)
+                )
+    
+    
+    line_bot_api.reply_message(event.reply_token, remessage)      
+        
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -158,82 +183,19 @@ def handle_message(event):
     if re.search('關鍵評論科學', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('science')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('business')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('career')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
 
 #科技報橘
@@ -279,181 +241,39 @@ def handle_message(event):
     if re.search('tech創新創業', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('創新創業/')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('tech人工智慧', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('artificialintelligence/')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('techorange新經濟', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('新經濟/')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)        
         return 0 
     
     if re.search('techorange數位轉型', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('數位轉型/')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('techorange', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
     if re.search('tech數位行銷', event.message.text, re.IGNORECASE):
         dic = corwler.techorange('software_digimarketing/')
         
-        columns = []
-        for i in range(3):
-            carousel = CarouselColumn(
-                        thumbnail_image_url = dic[i]['img'],
-                        title = dic[i]['title'],
-                        text = dic[i]['summary'],
-                        actions=[
-                            URITemplateAction(
-                                label = '點我看新聞',
-                                uri = dic[i]['link']
-                              )
-                            ]
-                        )
-            columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
+        makeCard(dic)
         return 0 
     
-    if message == 'googlemap':
-        # 取得最新評價
-        text = corwler.google()
-        # 包裝訊息
-        remessage = TextSendMessage(text=text)
-        # 回應使用者
-        line_bot_api.reply_message(
-                        event.reply_token,
-                        remessage)
-        return 0     
-    
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-    return 0     
-
 
 if __name__ == '__main__':
     app.run(debug=True)
