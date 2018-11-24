@@ -219,8 +219,8 @@ def handle_message(event):
                             text='tech人工智慧'
                            ),
                         MessageTemplateAction(
-                            label='數位行銷',
-                            text='tech數位行銷'
+                            label='全部',
+                            text='tech全部'
                            )
 
                          ]
@@ -279,8 +279,8 @@ def handle_message(event):
         makeCard(dic, event)        
         return 0 
     
-    if re.search('techorange數位轉型', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('數位轉型/')
+    if re.search('techorange全部', event.message.text, re.IGNORECASE):
+        dic = corwler.techorange2()
         
         makeCard(dic, event)
         return 0 

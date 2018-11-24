@@ -11,50 +11,6 @@ import json
 import feedparser
 
 
-def udn_news():
-    '''
-    抓最新前三篇新聞
-    
-    回傳是一個dict
-    '''
-    rss_url = 'https://udn.com/rssfeed/news/2/6638?ch=news'
- 
-    # 抓取資料
-    rss = feedparser.parse(rss_url)
-    
-    cards = []    
-    for index in range(0,3):
-        # 抓文章標題
-        title = rss['entries'][index]['title']
-        # 抓文章連結
-        link = rss['entries'][index]['link']
-        # 處理摘要格式
-        summary =  rss['entries'][index]['summary']
-        
-        if 'img' in summary:
-            soup = BeautifulSoup(summary, 'html.parser')
-            p_list = soup.find_all('p')
-            # 抓文章摘要 限制只有60個字
-            text = p_list[1].getText()[:50]
-            # 抓文章圖片
-            image = p_list[0].img['src']
-        else:
-            # 沒有圖片
-            text = summary[:50]
-            image = 'https://i.imgur.com/vkqbLnz.png'
-        
-        card = {'title':title,
-                'link':link,
-                'summary': text,
-                'img':image
-                }
-        cards.append(card)
-        
-    return cards
-
-
-
-
 def techorange(newType):
     '''
     在techorangeAi 上某個關鍵字最新的文章
@@ -96,13 +52,51 @@ def techorange(newType):
     
     return cards
     
+def techorange2():
+    '''
+    在techorangeAi 上某個關鍵字最新的文章
+    '''
+    url = 'https://buzzorange.com/techorange/
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    atags = soup.select('.entry-title')
 
+    cards = []
+    for index in range(3):    
+        #文章標題
+
+        title = atags[index].text[:40]
+        
+        #文章內文
+        interUrl = atags[index].a['href']
+        interResp = requests.get(interUrl)
+        interSoup = BeautifulSoup(interResp.text, 'html.parser')
+        interAtags = interSoup.select('.entry-content')
+        text = interAtags[0].text.replace('\n', '')[:50]
+
+        
+        #文章連結
+        link = interUrl
+        
+        #圖片
+        img = interSoup.find_all('img', re.compile('align'))
+        image = img[1]['src']   
+        
+        card = {'title':title,
+                    'link':link,
+                    'summary': text,
+                    'img':image
+                    }
+        cards.append(card)
+ 
+    
+    return cards
 
 def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
     '''
-    newType = 'career'
+    newType =  newType
     url = 'https://www.thenewslens.com/category/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
@@ -133,7 +127,7 @@ def theNewLens(newType):
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':image
+                        'img':'https://i.imgur.com/uM5Xj2W.jpg'
                         }
         cards.append(card)
 
