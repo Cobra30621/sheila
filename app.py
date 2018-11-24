@@ -205,7 +205,7 @@ def handle_message(event):
         columns = []
         img = 'https://asia.money2020.com/sites/asia.money2020.com/files/Tech-orange360.png'
 
-        carousel = CarouselColumn(
+        carousel1 = CarouselColumn(
                     thumbnail_image_url = img,
                     title = '科技報橘新聞',
                     text = '點擊觀看類型',
@@ -225,7 +225,30 @@ def handle_message(event):
 
                          ]
                      )
-        columns.append(carousel)
+        columns.append(carousel1)   
+                 
+        carousel2 = CarouselColumn(
+                    thumbnail_image_url = img,
+                    title = '科技報橘新聞',
+                    text = '點擊觀看類型',
+                    actions=[
+                        MessageTemplateAction(
+                            label='選書',
+                            text='techorange選書'
+                           ),
+                        MessageTemplateAction(
+                            label='fintech',
+                            text='techfintech'
+                           ),
+                        MessageTemplateAction(
+                            label='數位行銷',
+                            text='tech數位行銷'
+                           )
+
+                         ]
+                     )
+                    
+        columns.append(carousel2)
 
         
         remessage = TemplateSendMessage(
@@ -250,8 +273,8 @@ def handle_message(event):
         makeCard(dic, event)
         return 0 
     
-    if re.search('techorange新經濟', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('新經濟/')
+    if re.search('techorange選書', event.message.text, re.IGNORECASE):
+        dic = corwler.techorange('reading/')
         
         makeCard(dic, event)        
         return 0 
@@ -262,8 +285,8 @@ def handle_message(event):
         makeCard(dic, event)
         return 0 
     
-    if re.search('techorange', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('')
+    if re.search('techorangefintech', event.message.text, re.IGNORECASE):
+        dic = corwler.techorange('fintech/')
         
         makeCard(dic, event)
         return 0 
