@@ -56,7 +56,7 @@ def techorange2():
     '''
     在techorangeAi 上某個關鍵字最新的文章
     '''
-    url = 'https://buzzorange.com/techorange/
+    url = 'https://buzzorange.com/techorange/'
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
     atags = soup.select('.entry-title')
