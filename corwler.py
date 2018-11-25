@@ -107,7 +107,7 @@ def theNewLens(newType):
     images = soup.select('.lazy-container') 
 
     cards = []
-index = 0
+
     for index in range(3):
         #文章標題
         title = titles[index].text[:40]
