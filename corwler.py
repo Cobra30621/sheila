@@ -32,8 +32,8 @@ def techorange(newType):
         interResp = requests.get(interUrl)
         interSoup = BeautifulSoup(interResp.text, 'html.parser')
         interAtags = interSoup.select('.entry-content')
-        text = interAtags[0].text.replace('\n', '')[:50]
-
+        text = interAtags[0].text.replace('\n', '')
+        text = text.replace('【我們為什麼挑選這篇文章】', '')[:50]
         
         #文章連結
         link = interUrl
@@ -72,8 +72,8 @@ def techorange2():
         interResp = requests.get(interUrl)
         interSoup = BeautifulSoup(interResp.text, 'html.parser')
         interAtags = interSoup.select('.entry-content')
-        text = interAtags[0].text.replace('\n', '')[:50]
-
+        text = interAtags[0].text.replace('\n', '')
+        text = text.replace('【我們為什麼挑選這篇文章】', '')[:50]
         
         #文章連結
         link = interUrl
@@ -96,7 +96,7 @@ def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
     '''
-    newType =  newType
+    newType =  'science'
     url = 'https://www.thenewslens.com/category/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
@@ -120,6 +120,7 @@ def theNewLens(newType):
         
         #圖片
         image = re.findall(r'(https.*?)\d{3,}w',str(images[index]))[2]
+        image = image.replace('?auto=compress&amp;h=240&amp;q=80&amp;w=400', '')
         #b = re.findall('350w,[\S]*400w',str(images[0]))
         
         
@@ -127,7 +128,7 @@ def theNewLens(newType):
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':'https://i.imgur.com/uM5Xj2W.jpg'
+                        'img':image
                         }
         cards.append(card)
 
