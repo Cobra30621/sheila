@@ -169,7 +169,7 @@ def fb():
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':image
+                        'img':'https://image4.thenewslens.com/2016/8/ruf63jkgaf07jje0vuj3fgsmiz5gm2.jpg'
                         }
         cards.append(card)
 
