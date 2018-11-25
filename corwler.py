@@ -107,7 +107,7 @@ def theNewLens(newType):
     images = soup.select('.lazy-container') 
 
     cards = []
-
+index = 0
     for index in range(3):
         #文章標題
         title = titles[index].text[:40]
@@ -128,7 +128,7 @@ def theNewLens(newType):
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':image
+                        'img':'https://i.imgur.com/uM5Xj2W.jpg'
                         }
         cards.append(card)
 
@@ -169,9 +169,8 @@ def fb():
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':'https://image4.thenewslens.com/2016/8/ruf63jkgaf07jje0vuj3fgsmiz5gm2.jpg?auto=compress&h=240&q=80&w=400'
+                        'img':image
                         }
-        
         cards.append(card)
 
     return cards
