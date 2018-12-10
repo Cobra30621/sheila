@@ -26,6 +26,60 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('qxQIS8TTitqfZkp4+wuHQCe+pEWKskFrxr/jRB8mRMjaEr5EHgZKKwWC1MX+UUy6sbqD1Gbr299QTpplU3idbEBBTGs/LQZGG6dHCUnvK7Fs8my2hCIwYPlw92p/W+Vs97wZQQASgXsVT6/oADxNNQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('258c64afe44ab5ed8e041a75f88fcf27')
 
+#自動傳訊息
+
+#基本設定
+import schedule
+import time
+from pymongo import MongoClient
+import urllib.parse
+import datetime
+
+line_bot_api = LineBotApi('qxQIS8TTitqfZkp4+wuHQCe+pEWKskFrxr/jRB8mRMjaEr5EHgZKKwWC1MX+UUy6sbqD1Gbr299QTpplU3idbEBBTGs/LQZGG6dHCUnvK7Fs8my2hCIwYPlw92p/W+Vs97wZQQASgXsVT6/oADxNNQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('258c64afe44ab5ed8e041a75f88fcf27')
+yourID='U952f3be2ef6be155c9b8af9d47aff137'
+
+#做卡片
+def makeEverydayCard(dic):
+    dic = dic
+
+    columns = []
+    for i in range(3):
+        carousel = CarouselColumn(
+                    thumbnail_image_url = dic[i]['img'],
+                    title = dic[i]['title'],
+                    text = dic[i]['summary'],
+                    actions=[
+                        URITemplateAction(
+                            label = '點我看新聞',
+                            uri = dic[i]['link']
+                          )
+                        ]
+                    )
+        columns.append(carousel)
+    
+    remessage = TemplateSendMessage(
+                alt_text='Carousel template',
+                template=CarouselTemplate(columns=columns)
+                )
+    return remessage
+
+#爬的新聞
+techorangeNew = ['artificialintelligence/', 'reading/', '創新創業/']
+
+#執行工作
+def job():
+    for i in techorangeNew:
+        dic = corwler.techorange(i)
+        remessage = makeEverydayCard(dic)
+        line_bot_api.push_message(yourID, remessage)
+
+second_5_j = schedule.every().day.at('22:59').do(job)
+
+#迴圈
+while True: 
+    schedule.run_pending()
+
 
 
 @app.route("/callback", methods=['POST'])
@@ -188,7 +242,7 @@ def handle_message(event):
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('business')
-        
+
         makeCard(dic, event)
         return 0 
     
