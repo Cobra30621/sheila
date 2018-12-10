@@ -8,5 +8,4 @@ pandas
 beautifulsoup4
 schedule
 time
-urllib.parse
 datetime
