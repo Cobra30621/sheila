@@ -79,18 +79,18 @@ def techorange2():
         link = interUrl
         
         #圖片
-        img = interSoup.find_all('img', re.compile('align'))
-        image = img[1]['src']   
-        
+#        img = interSoup.find_all('img', re.compile('align'))
+#        image = img[1]['src']   
+        img = 'https://i.imgur.com/uM5Xj2W.jpg'
         card = {'title':title,
                     'link':link,
                     'summary': text,
-                    'img':image
+                    'img':img
                     }
         cards.append(card)
  
-    
     return cards
+
 
 def theNewLens(newType):
     '''

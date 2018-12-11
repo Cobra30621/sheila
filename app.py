@@ -35,8 +35,6 @@ from pymongo import MongoClient
 import urllib.parse
 import datetime
 
-line_bot_api = LineBotApi('qxQIS8TTitqfZkp4+wuHQCe+pEWKskFrxr/jRB8mRMjaEr5EHgZKKwWC1MX+UUy6sbqD1Gbr299QTpplU3idbEBBTGs/LQZGG6dHCUnvK7Fs8my2hCIwYPlw92p/W+Vs97wZQQASgXsVT6/oADxNNQdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('258c64afe44ab5ed8e041a75f88fcf27')
 yourID='U952f3be2ef6be155c9b8af9d47aff137'
 
 #做卡片
@@ -74,14 +72,13 @@ def job():
         remessage = makeEverydayCard(dic)
         line_bot_api.push_message(yourID, remessage)
 
-second_5_j = schedule.every().day.at('21:15').do(job)
+second_5_j = schedule.every().day.at('22:59').do(job)
 
 #迴圈
 while True: 
     schedule.run_pending()
 
-now = datetime.datetime.now()    
-line_bot_api.push_message(yourID, now)
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
