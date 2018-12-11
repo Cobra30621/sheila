@@ -80,8 +80,8 @@ second_5_j = schedule.every().day.at('21:15').do(job)
 while True: 
     schedule.run_pending()
 
-now = datetime.datetime.now()    
-line_bot_api.push_message(yourID, now)
+    now = datetime.datetime.now()    
+    line_bot_api.push_message(yourID, now)
 
 @app.route("/callback", methods=['POST'])
 def callback():
