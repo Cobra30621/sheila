@@ -74,7 +74,7 @@ def job():
         remessage = makeEverydayCard(dic)
         line_bot_api.push_message(yourID, remessage)
 
-second_5_j = schedule.every().day.at('21:10').do(job)
+second_5_j = schedule.every().day.at('21:15').do(job)
 
 #迴圈
 while True: 
