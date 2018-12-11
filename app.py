@@ -75,8 +75,8 @@ def job():
 second_5_j = schedule.every().day.at('22:59').do(job)
 
 #迴圈
-while True: 
-    schedule.run_pending()
+#while True: 
+#    schedule.run_pending()
 
 
 
