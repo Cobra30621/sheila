@@ -37,7 +37,7 @@ def Pansci():
         interAtags = interSoup.find('div', {'class':'Zi_ad_ar_iR'})
         
         textList = interAtags.find_all('p')
-        text = textList[0].text[:50]
+        text = textList[0].replace('0' + str(index + 1), '').text[:50]
         
         if text == '':
             text = '爬失敗了'
@@ -127,7 +127,7 @@ def techorange2():
         #圖片
 #        img = interSoup.find_all('img', re.compile('align'))
 #        image = img[1]['src']   
-        img = 'https://i.imgur.com/uM5Xj2W.jpg'
+
         card = {'title':title,
                     'link':link,
                     'summary': text,
