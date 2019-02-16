@@ -158,7 +158,14 @@ def handle_message(event):
         line_bot_api.reply_message(
                         event.reply_token,
                         remessage)
-        return 0     
+        return 0   
+    
+    if re.search('Hi|hello|你好|ha', message, re.IGNORECASE):
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+        
+        return 0 
 #關鍵評論網
             
     if re.search('theNewLens', event.message.text, re.IGNORECASE):
