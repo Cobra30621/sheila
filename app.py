@@ -27,47 +27,32 @@ line_bot_api = LineBotApi('qxQIS8TTitqfZkp4+wuHQCe+pEWKskFrxr/jRB8mRMjaEr5EHgZKK
 handler = WebhookHandler('258c64afe44ab5ed8e041a75f88fcf27')
 
 #自動傳訊息
+datetime.datetime()
 
 #基本設定
 import schedule
 import time
 from pymongo import MongoClient
 import urllib.parse
-#import datetime
+import datetime
 
 yourID='U952f3be2ef6be155c9b8af9d47aff137'
 
-#做卡片
-def makeEverydayCard(dic):
-    dic = dic
+'''
+#執行工作
+def job():
+    for i in techorangeNew:
+        dic = corwler.techorange(i)
+        remessage = makeEverydayCard(dic)
+        line_bot_api.push_message(yourID, remessage)
 
-    columns = []
-    for i in range(3):
-        carousel = CarouselColumn(
-                    thumbnail_image_url = dic[i]['img'],
-                    title = dic[i]['title'],
-                    text = dic[i]['summary'],
-                    actions=[
-                        URITemplateAction(
-                            label = '點我看新聞',
-                            uri = dic[i]['link']
-                          )
-                        ]
-                    )
-        columns.append(carousel)
-    
-    remessage = TemplateSendMessage(
-                alt_text='Carousel template',
-                template=CarouselTemplate(columns=columns)
-                )
-    return remessage
+second_5_j = schedule.every().day.at('21:25').do(job)
 
-#爬的新聞
-techorangeNew = ['artificialintelligence/', 'reading/', '創新創業/']
+#迴圈
+while True: 
+    schedule.run_pending()
 
-
-
-
+'''
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -111,10 +96,10 @@ def handle_follow(event):
                'ready':0}
         
         mongodb.insert_one(dic,'users')
-   
+
+#做卡片
 def makeCard(dic, event):
     dic = dic
-
     columns = []
     for i in range(3):
         carousel = CarouselColumn(
@@ -158,186 +143,38 @@ def handle_message(event):
        'mess':message}
     mongodb.insert_one(dic,'message')
     
-    if mongodb.get_ready(uid,'users') ==1 :
-        mongodb.update_byid(uid,{'ready':0},'users')
-        casttext = name+' 對大家說： '+message
-        remessage = TextSendMessage(text=casttext)
-        userids = mongodb.get_all_userid('users')
-        line_bot_api.multicast(userids, remessage)
-        return 0 
 
-
-    if message == '群體廣播':
-        # 設定使用者下一句話要群廣播
-        mongodb.update_byid(uid,{'ready':1},'users')
-        remessage = TextSendMessage(text='請問要廣播什麼呢?')
-        line_bot_api.reply_message(
-                        event.reply_token,
-                        remessage)
-        return 0 
-    
-    if re.search('Hi|hello|你好|ha', message, re.IGNORECASE):
-        line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-        
-        return 0 
 #關鍵評論網
             
     if re.search('theNewLens', event.message.text, re.IGNORECASE):
      
-        columns = []
-        img = 'https://image3.thenewslens.com/assets/web/cover-photo-medium.png'
-
-        carousel = CarouselColumn(
-                    thumbnail_image_url = img,
-                    title = '關鍵評論網新聞',
-                    text = '點擊觀看類型',
-                    actions=[
-                        MessageTemplateAction(
-                            label='科學',
-                            text='關鍵評論科學'
-                           ),
-                        MessageTemplateAction(
-                            label='商業',
-                            text='關鍵評論商業'
-                           ),
-                        MessageTemplateAction(
-                            label='職場',
-                            text='關鍵評論職場'
-                           )
-                         ]
-                     )
-        columns.append(carousel)
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
-        return 0         
-            
-    
-    
-    if re.search('關鍵評論科學', event.message.text, re.IGNORECASE):
-        dic = corwler.theNewLens('science')
-        
+        dic = corwler.theNewLens('science')       
         makeCard(dic, event)
-        return 0 
-    
-    if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
+
         dic = corwler.theNewLens('business')
+        makeCard(dic, event)
 
+        dic = corwler.theNewLens('career')       
         makeCard(dic, event)
-        return 0 
-    
-    if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
-        dic = corwler.theNewLens('career')
         
-        makeCard(dic, event)
         return 0 
 
 #科技報橘
         
     if re.search('科技報橘', event.message.text, re.IGNORECASE):
-     
-        columns = []
-        img = 'https://asia.money2020.com/sites/asia.money2020.com/files/Tech-orange360.png'
-
-        carousel1 = CarouselColumn(
-                    thumbnail_image_url = img,
-                    title = '科技報橘新聞',
-                    text = '點擊觀看類型',
-                    actions=[
-                        MessageTemplateAction(
-                            label='創新創業',
-                            text='tech創新創業'
-                           ),
-                        MessageTemplateAction(
-                            label='人工智慧',
-                            text='tech人工智慧'
-                           ),
-                        MessageTemplateAction(
-                            label='全部',
-                            text='tech全部'
-                           )
-
-                         ]
-                     )
-        columns.append(carousel1)   
-                 
-        carousel2 = CarouselColumn(
-                    thumbnail_image_url = img,
-                    title = '科技報橘新聞',
-                    text = '點擊觀看類型',
-                    actions=[
-                        MessageTemplateAction(
-                            label='選書',
-                            text='techorange選書'
-                           ),
-                        MessageTemplateAction(
-                            label='fintech',
-                            text='techfintech'
-                           ),
-                        MessageTemplateAction(
-                            label='數位行銷',
-                            text='tech數位行銷'
-                           )
-
-                         ]
-                     )
-                    
-        columns.append(carousel2)
-
-        
-        remessage = TemplateSendMessage(
-                    alt_text='Carousel template',
-                    template=CarouselTemplate(columns=columns)
-                    )
-        
-        
-        line_bot_api.reply_message(event.reply_token, remessage)
-        return 0         
-            
-    
-    if re.search('tech創新創業', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('創新創業/')
-        
-        makeCard(dic, event)
-        return 0 
-    
-    if re.search('tech人工智慧', event.message.text, re.IGNORECASE):
+        #人工智慧
         dic = corwler.techorange('artificialintelligence/')
-        
+        makeCard(dic, event)    
+
+        #全部
+        dic = corwler.techorange2()        
         makeCard(dic, event)
-        return 0 
-    
-    if re.search('techorange選書', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('reading/')
         
-        makeCard(dic, event)        
-        return 0 
-    
-    if re.search('techorange全部', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange2()
-        
-        makeCard(dic, event)
-        return 0 
-    
-    if re.search('techorangefintech', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('fintech/')
-        
-        makeCard(dic, event)
-        return 0 
-    
-    if re.search('tech數位行銷', event.message.text, re.IGNORECASE):
-        dic = corwler.techorange('software_digimarketing/')
-        
-        makeCard(dic, event)
-        return 0 
-    
+#泛科學       
+    if re.search('泛科學', event.message.text, re.IGNORECASE):
+        dic = corwler.Pansci()
+        makeCard(dic, event)    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

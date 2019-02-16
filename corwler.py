@@ -11,6 +11,50 @@ import json
 import feedparser
 
 
+
+#泛科學
+def Pansci():
+    '''
+    在techorangeAi 上某個關鍵字最新的文章
+    '''
+
+    url = 'https://pansci.asia/hots/day' 
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    atags = soup.select('table')
+    articleList = atags[0].find_all('tr')
+        
+    cards = []
+    for index in range(3):    
+        #文章標題
+
+        title = articleList[index + 1].text[:40]
+        
+        #文章內文
+        interUrl = articleList[index + 1].a['href']
+        interResp = requests.get(interUrl)
+        interSoup = BeautifulSoup(interResp.text, 'html.parser')
+        interAtags = interSoup.find('div', {'class':'Zi_ad_ar_iR'})
+        
+        textList = interAtags.find_all('p')
+        text = textList[0].text[:50]
+        
+        #文章連結
+        link = interUrl
+        
+        #圖片
+        image = 'https://pansci.asia/wp-content/uploads/2015/09/257f5436a53b89af50469aa6e6c67d7a.png'   
+        
+        card = {'title':title,
+                    'link':link,
+                    'summary': text,
+                    'img':image
+                    }
+        cards.append(card) 
+    
+    return cards
+
+#科技報橘
 def techorange(newType):
     '''
     在techorangeAi 上某個關鍵字最新的文章
@@ -91,7 +135,7 @@ def techorange2():
  
     return cards
 
-
+#關鍵評論網
 def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
@@ -129,47 +173,6 @@ def theNewLens(newType):
                         'link':link,
                         'summary': text,
                         'img':'https://i.imgur.com/uM5Xj2W.jpg'
-                        }
-        cards.append(card)
-
-    return cards
-
-
-
-def fb():
-    '''
-    搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
-    '''
-    url = 'https://www.facebook.com/chasedrea?__tn__=%2CdC-R-R&eid=ARDnjjnJesfZGk4eRSXvv3mzSi9A3t5sZ3KokokeDUJH-COyd6dwjMdjxYTfsMjVQ3GygfVOZrgr54r-&hc_ref=ARRXWEZo5GRi3kCiaSIvgsDW0gdAdO5hexa2T6cM3rpCfCRPAtEiepFoBKhi_kNLLT8&fref=nf'
-    resp = requests.get(url)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-    atags = soup.find_all('div', re.compile('_26ni hidden_elem img'))
-
-    
-    cards = []
-    for index in range(3):
-        #文章標題
-        title = atags2[index].a['title']
-        
-        #文章連結
-        link = atags2[index].a['href']
-        
-        #文章內文
-        textlist = atags[index].find_all('div', re.compile('description'))
-        text = str(textlist[0])
-        text = text.replace('<div class="description"> ', '')[:50] 
-        
-        #圖片
-        
-        imglist = str(atags2[index].a.div.img).split(',')
-        imglist = imglist[2].split(' ')
-        image = imglist[1]
-        
-        
-        card = {'title':title,
-                        'link':link,
-                        'summary': text,
-                        'img':image
                         }
         cards.append(card)
 
