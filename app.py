@@ -127,22 +127,62 @@ def handle_message(event):
             
     if re.search('theNewLens', event.message.text, re.IGNORECASE):
      
-        dic = corwler.theNewLens('science')       
-        makeCard(dic, event)
+        columns = []
+        img = 'https://image3.thenewslens.com/assets/web/cover-photo-medium.png'
+
+        carousel = CarouselColumn(
+                    thumbnail_image_url = img,
+                    title = '關鍵評論網新聞',
+                    text = '點擊觀看類型',
+                    actions=[
+                        MessageTemplateAction(
+                            label='科學',
+                            text='關鍵評論科學'
+                           ),
+                        MessageTemplateAction(
+                            label='商業',
+                            text='關鍵評論商業'
+                           ),
+                        MessageTemplateAction(
+                            label='職場',
+                            text='關鍵評論職場'
+                           )
+                         ]
+                     )
+        columns.append(carousel)
         
-    if re.search('theNewLens', event.message.text, re.IGNORECASE):
+        remessage = TemplateSendMessage(
+                    alt_text='Carousel template',
+                    template=CarouselTemplate(columns=columns)
+                    )
+        
+        
+        line_bot_api.reply_message(event.reply_token, remessage)
+        return 0         
+            
+    
+    
+    if re.search('關鍵評論科學', event.message.text, re.IGNORECASE):
+        dic = corwler.theNewLens('science')
+        
+        makeCard(dic, event)
+        return 0 
+    
+    if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('business')
-        makeCard(dic, event)
         
-    if re.search('theNewLens', event.message.text, re.IGNORECASE):
-        dic = corwler.theNewLens('career')       
         makeCard(dic, event)
+        return 0 
+    
+    if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
+        dic = corwler.theNewLens('career')
         
+        makeCard(dic, event)
         return 0 
 
 #科技報橘
         
-    if re.search('科技報橘', event.message.text, re.IGNORECASE):
+    if re.search('科技報橘ai', event.message.text, re.IGNORECASE):
         #人工智慧
         dic = corwler.techorange('artificialintelligence/')
         makeCard(dic, event)    

@@ -174,7 +174,7 @@ def theNewLens(newType):
         card = {'title':title,
                         'link':link,
                         'summary': text,
-                        'img':'https://i.imgur.com/uM5Xj2W.jpg'
+                        'img': image
                         }
         cards.append(card)
 
