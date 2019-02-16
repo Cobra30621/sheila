@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Aug 24 18:12:45 2018
-
 @author: linzino
 """
 # server-side
@@ -96,7 +95,7 @@ def makeCard(dic, event):
     
     
     line_bot_api.reply_message(event.reply_token, remessage)      
-        
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -130,10 +129,12 @@ def handle_message(event):
      
         dic = corwler.theNewLens('science')       
         makeCard(dic, event)
-
+        
+    if re.search('theNewLens', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('business')
         makeCard(dic, event)
-
+        
+    if re.search('theNewLens', event.message.text, re.IGNORECASE):
         dic = corwler.theNewLens('career')       
         makeCard(dic, event)
         
@@ -145,7 +146,8 @@ def handle_message(event):
         #人工智慧
         dic = corwler.techorange('artificialintelligence/')
         makeCard(dic, event)    
-
+        
+    if re.search('科技報橘', event.message.text, re.IGNORECASE):
         #全部
         dic = corwler.techorange2()        
         makeCard(dic, event)
@@ -158,3 +160,33 @@ def handle_message(event):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+    
+    '''
+#自動傳訊息
+datetime.datetime()
+
+#基本設定
+import schedule
+import time
+from pymongo import MongoClient
+import urllib.parse
+import datetime
+
+yourID='U952f3be2ef6be155c9b8af9d47aff137'
+
+
+#執行工作
+def job():
+    for i in techorangeNew:
+        dic = corwler.techorange(i)
+        remessage = makeEverydayCard(dic)
+        line_bot_api.push_message(yourID, remessage)
+
+second_5_j = schedule.every().day.at('21:25').do(job)
+
+#迴圈
+while True: 
+    schedule.run_pending()
+
+'''

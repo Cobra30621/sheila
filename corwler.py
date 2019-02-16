@@ -39,6 +39,8 @@ def Pansci():
         textList = interAtags.find_all('p')
         text = textList[0].text[:50]
         
+        if text == '':
+            text = '爬失敗了'
         #文章連結
         link = interUrl
         
