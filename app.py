@@ -65,18 +65,7 @@ def makeEverydayCard(dic):
 #爬的新聞
 techorangeNew = ['artificialintelligence/', 'reading/', '創新創業/']
 
-#執行工作
-def job():
-    for i in techorangeNew:
-        dic = corwler.techorange(i)
-        remessage = makeEverydayCard(dic)
-        line_bot_api.push_message(yourID, remessage)
 
-second_5_j = schedule.every().day.at('22:59').do(job)
-
-#迴圈
-#while True: 
-#    schedule.run_pending()
 
 
 
