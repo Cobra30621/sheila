@@ -19,17 +19,14 @@ from datetime import datetime
 import mongodb
 import corwler
 
-
+#基本設定
 app = Flask(__name__)
-
 line_bot_api = LineBotApi('qxQIS8TTitqfZkp4+wuHQCe+pEWKskFrxr/jRB8mRMjaEr5EHgZKKwWC1MX+UUy6sbqD1Gbr299QTpplU3idbEBBTGs/LQZGG6dHCUnvK7Fs8my2hCIwYPlw92p/W+Vs97wZQQASgXsVT6/oADxNNQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('258c64afe44ab5ed8e041a75f88fcf27')
 
 
-
 @app.route("/callback", methods=['POST'])
 def callback():
-
     
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
@@ -69,7 +66,8 @@ def handle_follow(event):
                'ready':0}
         
         mongodb.insert_one(dic,'users')
-   
+
+#做line卡片   
 def makeCard(dic, event):
     dic = dic
 
@@ -169,9 +167,11 @@ def handle_message(event):
         return 0 
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
-        dic = corwler.theNewLens('business')
+ '''       dic = corwler.theNewLens('business')
         
-        makeCard(dic, event)
+        makeCard(dic, event)'''
+        dic = corwler.techorangeAi()
+        makeCard(dic, event) 
         return 0 
     
     if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
@@ -187,7 +187,7 @@ def handle_message(event):
         dic = corwler.techorangeAi()
         makeCard(dic, event)    
         
-    if re.search('科技報橘', event.message.text, re.IGNORECASE):
+    if re.search('科技報橘全部', event.message.text, re.IGNORECASE):
         #全部
         dic = corwler.techorange()        
         makeCard(dic, event)
