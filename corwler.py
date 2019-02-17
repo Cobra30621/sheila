@@ -173,8 +173,7 @@ def theNewLens(newType):
         text = texts[index].text.replace(' ', '')[:50] 
         
         #圖片
-        image = re.findall(r'(https.*?)\d{3,}w',str(images[index]))[2]
-        image = image.replace('?auto=compress&amp;h=240&amp;q=80&amp;w=400', '')
+        image = 'https://pansci.asia/wp-content/uploads/2015/09/257f5436a53b89af50469aa6e6c67d7a.png'
         #b = re.findall('350w,[\S]*400w',str(images[0]))
         
         
