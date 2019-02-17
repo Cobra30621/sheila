@@ -85,7 +85,7 @@ def techorangeAi():
         interResp = getHTMLText(interUrl)
         interSoup = BeautifulSoup(interResp, 'html.parser')
         interAtags = interSoup.select('.entry-content')
-        text = interAtags[0].text.replace('\n', '').replace(' ', '')
+        text = interAtags[0].text.replace('\n', '')
         text = text.replace('【我們為什麼挑選這篇文章】', '')[:50]
         
         #文章連結
