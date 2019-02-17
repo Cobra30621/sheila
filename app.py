@@ -167,9 +167,10 @@ def handle_message(event):
         return 0 
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
-
-        dic = corwler.techorangeAi()
-        makeCard(dic, event) 
+        dic = corwler.theNewLens('business')
+        
+        makeCard(dic, event)
+ 
         return 0 
     
     if re.search('關鍵評論職場', event.message.text, re.IGNORECASE):
@@ -182,7 +183,7 @@ def handle_message(event):
         
     if re.search('科技報橘ai', event.message.text, re.IGNORECASE):
         #人工智慧
-        dic = corwler.techorangeAi()
+        dic1 = corwler.techorangeAi()
         makeCard(dic, event)    
         
     if re.search('科技報橘全部', event.message.text, re.IGNORECASE):
