@@ -184,12 +184,12 @@ def handle_message(event):
         
     if re.search('科技報橘ai', event.message.text, re.IGNORECASE):
         #人工智慧
-        dic = corwler.techorange('artificialintelligence/')
+        dic = corwler.techorangeAi()
         makeCard(dic, event)    
         
     if re.search('科技報橘', event.message.text, re.IGNORECASE):
         #全部
-        dic = corwler.techorange2()        
+        dic = corwler.techorange()        
         makeCard(dic, event)
         
 #泛科學       

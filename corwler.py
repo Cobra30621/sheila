@@ -10,7 +10,15 @@ import re
 import json
 import feedparser
 
-
+#科技報橘用請求
+def getHTMLText(url):
+    try:
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+        resp.encoding = resp.apparent_encoding
+        return resp.text
+    except:
+        return ''
 
 #泛科學
 def Pansci():
@@ -28,7 +36,7 @@ def Pansci():
     for index in range(3):    
         #文章標題
 
-        title = articleList[index + 1].text[:40]
+        title = articleList[index + 1].replace('0' + str(index + 1), '').text[:40]
         
         #文章內文
         interUrl = articleList[index + 1].a['href']
@@ -37,7 +45,7 @@ def Pansci():
         interAtags = interSoup.find('div', {'class':'Zi_ad_ar_iR'})
         
         textList = interAtags.find_all('p')
-        text = textList[0].replace('0' + str(index + 1), '').text[:50]
+        text = textList[0].text[:50]
         
         if text == '':
             text = '爬失敗了'
@@ -56,15 +64,14 @@ def Pansci():
     
     return cards
 
-#科技報橘
-def techorange(newType):
-    '''
-    在techorangeAi 上某個關鍵字最新的文章
-    '''
-    newType = newType
-    url = 'https://buzzorange.com/techorange/tag/' + newType
-    resp = requests.get(url)
-    soup = BeautifulSoup(resp.text, 'html.parser')
+
+
+#科技報橘人工智慧
+def techorangeAi():
+
+    url = 'https://buzzorange.com/techorange/tag/artificialintelligence/'
+    respText = getHTMLText(url)
+    soup = BeautifulSoup(respText, 'html.parser')
     atags = soup.select('.entry-title')
 
     cards = []
@@ -97,27 +104,28 @@ def techorange(newType):
  
     
     return cards
-    
-def techorange2():
-    '''
-    在techorangeAi 上某個關鍵字最新的文章
-    '''
-    url = 'https://buzzorange.com/techorange/'
-    resp = requests.get(url)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-    atags = soup.select('.entry-title')
+ 
+#科技報橘首頁
+def techorange():
 
+    url = 'https://buzzorange.com/techorange/'
+    respText = getHTMLText(url)
+    soup = BeautifulSoup(respText, 'html.parser')
+    atags = soup.find_all('a', {'class':'post-thumbnail'})
+        
     cards = []
     for index in range(3):    
         #文章標題
-
-        title = atags[index].text[:40]
-        
-        #文章內文
-        interUrl = atags[index].a['href']
+        interUrl = atags[index]['href']
         interResp = requests.get(interUrl)
         interSoup = BeautifulSoup(interResp.text, 'html.parser')
         interAtags = interSoup.select('.entry-content')
+        
+        titleAtags = interSoup.find_all('header', {'class':'entry-header post-header'})
+        title = titleAtags[0].h1.text[:40]
+        
+        #文章內文
+
         text = interAtags[0].text.replace('\n', '')
         text = text.replace('【我們為什麼挑選這篇文章】', '')[:50]
         
@@ -125,13 +133,13 @@ def techorange2():
         link = interUrl
         
         #圖片
-#        img = interSoup.find_all('img', re.compile('align'))
-#        image = img[1]['src']   
+        image = atags[index]['style'].replace('background-image:url(', '')
+        image = image.replace(')', '')
 
         card = {'title':title,
                     'link':link,
                     'summary': text,
-                    'img':img
+                    'img':image
                     }
         cards.append(card)
  
@@ -142,7 +150,7 @@ def theNewLens(newType):
     '''
     搜尋關鍵評論網（theNewLens）的科學文章，做成字卡
     '''
-    newType =  'science'
+    newType =  newType
     url = 'https://www.thenewslens.com/category/' + newType
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')
