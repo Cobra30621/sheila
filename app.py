@@ -167,9 +167,7 @@ def handle_message(event):
         return 0 
     
     if re.search('關鍵評論商業', event.message.text, re.IGNORECASE):
- '''       dic = corwler.theNewLens('business')
-        
-        makeCard(dic, event)'''
+
         dic = corwler.techorangeAi()
         makeCard(dic, event) 
         return 0 
