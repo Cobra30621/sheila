@@ -36,8 +36,8 @@ def Pansci():
     for index in range(3):    
         #文章標題
 
-        title = articleList[index + 1].replace('0' + str(index + 1), '').text[:40]
-        
+        title = articleList[index + 1].text.replace('0' + str(index + 1), '')[:40]
+        title = title.replace('\n', '')
         #文章內文
         interUrl = articleList[index + 1].a['href']
         interResp = requests.get(interUrl)
@@ -82,10 +82,10 @@ def techorangeAi():
         
         #文章內文
         interUrl = atags[index].a['href']
-        interResp = requests.get(interUrl)
-        interSoup = BeautifulSoup(interResp.text, 'html.parser')
+        interResp = getHTMLText(interUrl)
+        interSoup = BeautifulSoup(interResp, 'html.parser')
         interAtags = interSoup.select('.entry-content')
-        text = interAtags[0].text.replace('\n', '')
+        text = interAtags[0].text.replace(' ', '')
         text = text.replace('【我們為什麼挑選這篇文章】', '')[:50]
         
         #文章連結
@@ -164,13 +164,13 @@ def theNewLens(newType):
 
     for index in range(3):
         #文章標題
-        title = titles[index].text[:40]
+        title = titles[index].text.replace(' ', '')[:40]
         
         #文章連結
         link = links[index].a['href']
         
         #文章內文
-        text = texts[index].text[:50] 
+        text = texts[index].text.replace(' ', '')[:50] 
         
         #圖片
         image = re.findall(r'(https.*?)\d{3,}w',str(images[index]))[2]
